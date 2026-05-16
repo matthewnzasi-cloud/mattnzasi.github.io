@@ -660,6 +660,99 @@
     gap: 16px;
   }
 
+  /* ─── CASE STUDY ─── */
+  .case-study {
+    border: 0.5px solid var(--border);
+    background: rgba(0,0,0,0.35);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .case-study::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--blue-deep) 100%);
+  }
+  .case-study-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .case-study-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+  .case-study-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .case-study-handle {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+  .case-study-body {
+    font-size: 15px;
+    color: rgba(240,239,255,0.75);
+    line-height: 1.75;
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+  .case-study-stats {
+    display: flex;
+    gap: 0;
+    border-top: 0.5px solid var(--border);
+    padding-top: 28px;
+  }
+  .cs-stat {
+    flex: 1;
+    border-right: 0.5px solid var(--border);
+    padding-right: 28px;
+    margin-right: 28px;
+  }
+  .cs-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+  .cs-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .cs-stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .case-study-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(123,121,255,0.12);
+    border: 0.5px solid rgba(123,121,255,0.25);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    margin-right: 8px;
+    margin-bottom: 20px;
+  }
+
   /* Print styles */
   @media print {
     body { cursor: auto; background: #0a0a0a; }
@@ -824,6 +917,36 @@
     </div>
     <div style="margin-top:16px;text-align:center">
       <a href="https://www.instagram.com/mattnzasi/" target="_blank" style="font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;border-bottom:0.5px solid var(--border);padding-bottom:2px;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">View full portfolio @mattnzasi ↗</a>
+    </div>
+  </section>
+
+  <!-- CASE STUDY -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">Case study</div>
+    <div class="case-study">
+      <div class="case-study-eyebrow">Featured collaboration</div>
+      <div class="case-study-brand">Fidbak</div>
+      <div class="case-study-handle">@fidbak · Soccer software</div>
+      <span class="case-study-tag">UGC Content</span>
+      <span class="case-study-tag">Instagram</span>
+      <span class="case-study-tag">TikTok</span>
+      <p class="case-study-body">
+        Rather than taking the traditional ad approach, the content I produced for Fidbak leaned into visual conversation — letting the product speak through storytelling rather than promotion. The result was content that felt native to the feed, earned attention organically, and drove real numbers across two platforms.
+      </p>
+      <div class="case-study-stats">
+        <div class="cs-stat">
+          <div class="cs-stat-num">100K+</div>
+          <div class="cs-stat-label">Combined views</div>
+        </div>
+        <div class="cs-stat">
+          <div class="cs-stat-num">2</div>
+          <div class="cs-stat-label">Platforms (IG + TikTok)</div>
+        </div>
+        <div class="cs-stat">
+          <div class="cs-stat-num">0</div>
+          <div class="cs-stat-label">Paid promotion used</div>
+        </div>
+      </div>
     </div>
   </section>
 

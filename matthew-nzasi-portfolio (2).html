@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matthew Nzasi — UGC Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #000000;
+    --white: #f0efff;
+    --accent: #7b79ff;
+    --accent2: #a5a3ff;
+    --mid: #0d0c2b;
+    --muted: #7775aa;
+    --border: rgba(180,178,255,0.15);
+    --blue-deep: #3533cd;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: linear-gradient(90deg, #000000 0%, #3533cd 100%) fixed;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.25s ease;
+    opacity: 0.5;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Layout */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 80px 0 60px;
+    position: relative;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .avail-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .avail-dot::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .avatar-wrap {
+    position: relative;
+  }
+  .avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 2;
+  }
+  .avatar-ring {
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px dashed var(--accent);
+    opacity: 0.5;
+    animation: spin 12s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 130px);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 0;
+  }
+
+  .hero-name .accent-word {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 32px;
+    gap: 40px;
+  }
+
+  .hero-desc {
+    max-width: 420px;
+    font-size: 15px;
+    color: rgba(245,242,237,0.65);
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .hero-cta:hover {
+    background: var(--white);
+    color: #000;
+    transform: translateY(-2px);
+  }
+  .hero-cta .arrow { font-size: 16px; }
+
+  /* ─── STATS ─── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .stat {
+    padding: 36px 0;
+    border-right: 0.5px solid var(--border);
+    padding-left: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .stat:last-child { border-right: none; }
+  .stat.visible { opacity: 1; transform: translateY(0); }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── SERVICES ─── */
+  .section {
+    padding: 64px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+  .service-item {
+    background: rgba(0,0,0,0.45);
+    padding: 28px 24px;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .service-item:hover::before { width: 100%; }
+  .service-item:hover { background: rgba(53,51,205,0.15); }
+
+  .service-icon {
+    font-size: 22px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .service-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .service-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── WHAT YOU GET ─── */
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .offer-card {
+    border: 0.5px solid var(--border);
+    padding: 28px;
+    position: relative;
+    transition: border-color 0.2s;
+    background: rgba(0,0,0,0.35);
+  }
+  .offer-card:hover { border-color: rgba(123,121,255,0.4); }
+  .offer-card.featured {
+    border-color: var(--accent);
+    background: rgba(53,51,205,0.18);
+  }
+
+  .offer-tag {
+    position: absolute;
+    top: -1px; right: 20px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .offer-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+  .offer-price {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .offer-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .offer-list li {
+    font-size: 13px;
+    color: rgba(245,242,237,0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .offer-list li::before {
+    content: '→';
+    color: var(--accent);
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ─── AUDIENCE ─── */
+  .audience-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .audience-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 0.9;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .audience-left h2 em {
+    color: var(--accent);
+    font-style: normal;
+    display: block;
+  }
+  .audience-left p {
+    font-size: 14px;
+    color: rgba(245,242,237,0.6);
+    line-height: 1.75;
+  }
+
+  .audience-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .audience-tag {
+    border: 0.5px solid var(--border);
+    padding: 14px 20px;
+    font-size: 13px;
+    color: rgba(245,242,237,0.7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .audience-tag:hover {
+    border-color: rgba(123,121,255,0.4);
+    color: var(--white);
+  }
+  .audience-tag span {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── PROCESS ─── */
+  .process-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .process-step {
+    padding: 28px 24px;
+    border-right: 0.5px solid var(--border);
+    position: relative;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: rgba(123,121,255,0.15);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .process-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .process-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER / CONTACT ─── */
+  .contact {
+    padding: 64px 0 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+  }
+
+  .contact-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    line-height: 0.9;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .contact-left h2 em {
+    color: var(--accent);
+    font-style: normal;
+    display: block;
+  }
+  .contact-email {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .contact-email:hover { color: var(--accent); border-color: var(--accent); }
+
+  .contact-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .social-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .social-link {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .social-link:hover { color: var(--accent); }
+
+  .footer-note {
+    font-size: 11px;
+    color: rgba(136,136,136,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* Scroll animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── REEL SHOWCASE ─── */
+  .reels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .reel-card {
+    position: relative;
+    border: 0.5px solid var(--border);
+    overflow: hidden;
+    aspect-ratio: 9/16;
+    background: rgba(0,0,0,0.5);
+    transition: border-color 0.25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .reel-card:hover { border-color: rgba(123,121,255,0.5); }
+
+  .reel-thumb {
+    width: 100%;
+    flex: 1;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reel-thumb iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+  }
+
+  .reel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .reel-card:hover .reel-overlay { opacity: 1; }
+
+  .reel-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s, transform 0.2s;
+  }
+  .reel-card:hover .reel-play-btn {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  .reel-play-btn svg {
+    width: 18px; height: 18px;
+    fill: #fff;
+    margin-left: 3px;
+  }
+
+  .reel-label {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .reel-desc {
+    font-size: 12px;
+    color: rgba(245,242,237,0.8);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  .reel-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .reel-ig-frame {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(0,0,0,0.55);
+    text-decoration: none;
+    color: var(--white);
+    transition: background 0.2s;
+  }
+  .reel-ig-frame:hover { background: rgba(53,51,205,0.25); }
+
+  .reel-ig-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .reel-ig-icon svg { width: 24px; height: 24px; fill: white; }
+
+  .reel-cta-text {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.5;
+  }
+  .reel-cta-text strong { color: var(--white); display: block; font-size: 13px; font-weight: 500; }
+
+  .reel-num {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    z-index: 2;
+    background: rgba(10,10,10,0.6);
+    padding: 2px 8px;
+  }
+
+  /* ─── PRICING: 3-col ─── */
+  .offer-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ─── CASE STUDY ─── */
+  .case-study {
+    border: 0.5px solid var(--border);
+    background: rgba(0,0,0,0.35);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .case-study::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--blue-deep) 100%);
+  }
+  .case-study-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .case-study-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+  .case-study-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .case-study-handle {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+  .case-study-body {
+    font-size: 15px;
+    color: rgba(240,239,255,0.75);
+    line-height: 1.75;
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+  .case-study-stats {
+    display: flex;
+    gap: 0;
+    border-top: 0.5px solid var(--border);
+    padding-top: 28px;
+  }
+  .cs-stat {
+    flex: 1;
+    border-right: 0.5px solid var(--border);
+    padding-right: 28px;
+    margin-right: 28px;
+  }
+  .cs-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+  .cs-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .cs-stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .case-study-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(123,121,255,0.12);
+    border: 0.5px solid rgba(123,121,255,0.25);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    margin-right: 8px;
+    margin-bottom: 20px;
+  }
+
+  /* Print styles */
+  @media print {
+    body { cursor: auto; background: #0a0a0a; }
+    .cursor, .cursor-ring { display: none; }
+    body::before { display: none; }
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 0 20px; }
+    .hero-name { font-size: 64px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat { border-right: 0.5px solid var(--border); }
+    .stat:nth-child(2n) { border-right: none; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .reels-grid { grid-template-columns: 1fr; }
+    .offer-grid-3 { grid-template-columns: 1fr; }
+    
+    .audience-block { grid-template-columns: 1fr; gap: 32px; }
+    .process-row { grid-template-columns: repeat(2, 1fr); }
+    .contact { flex-direction: column; align-items: flex-start; }
+    .contact-right { align-items: flex-start; }
+    .hero-bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-label">UGC Creator · Portfolio</div>
+        <div class="avail-dot">Available for brand deals</div>
+      </div>
+      <div class="avatar-wrap">
+        <div class="avatar-ring"></div>
+        <div class="avatar">MN</div>
+      </div>
+    </div>
+
+    <div class="hero-name">
+      Matthew
+      <span class="accent-word">Nzasi</span>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        Creating short-form content at the intersection of photography, personal branding, and business growth — built for brands that want to reach an audience of creators and entrepreneurs who actually buy.
+      </p>
+      <a href="mailto:matthewnzasi@gmail.com" class="hero-cta">
+        Work with me <span class="arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">1.5M+</div>
+      <div class="stat-label">Monthly views</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">48.7K</div>
+      <div class="stat-label">Content saves</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">28K+</div>
+      <div class="stat-label">Followers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100+</div>
+      <div class="stat-label">Daily new followers</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">What I create</div>
+    <div class="services-grid">
+      <div class="service-item">
+        <span class="service-icon">🎬</span>
+        <div class="service-name">Short-form video</div>
+        <div class="service-desc">15–60s punchy videos built for Reels, TikTok, and Shorts. Hook-first structure every time.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">📦</span>
+        <div class="service-name">Product demos & unboxings</div>
+        <div class="service-desc">Authentic, hands-on demos that show your product in real creative workflows.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">📸</span>
+        <div class="service-name">Photo stills</div>
+        <div class="service-desc">Clean, editorial-quality product photography for ads, websites, and social.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">🎓</span>
+        <div class="service-name">Tutorials & how-tos</div>
+        <div class="service-desc">Step-by-step content that positions your product as the essential tool in the workflow.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">🎞️</span>
+        <div class="service-name">Reels / TikToks</div>
+        <div class="service-desc">Platform-native content engineered for discovery, saves, and shares — not just views.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">🎒</span>
+        <div class="service-name">Behind-the-scenes / lifestyle</div>
+        <div class="service-desc">Real-world storytelling that makes your brand feel like part of the creator's life.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REEL SHOWCASE -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">Featured work</div>
+    <div class="reels-grid">
+
+      <!-- Reel 1 -->
+      <div class="reel-card">
+        <div class="reel-thumb">
+          <a href="https://www.instagram.com/reel/DUlQ0K2EZvR/" target="_blank" class="reel-ig-frame">
+            <div class="reel-ig-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="reel-cta-text"><strong>Watch on Instagram</strong>Reel 01 · @mattnzasi</div>
+          </a>
+          <div class="reel-num">01</div>
+        </div>
+      </div>
+
+      <!-- Reel 2 -->
+      <div class="reel-card">
+        <div class="reel-thumb">
+          <a href="https://www.instagram.com/reel/DTcXdy9CJuz/" target="_blank" class="reel-ig-frame">
+            <div class="reel-ig-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="reel-cta-text"><strong>Watch on Instagram</strong>Reel 02 · @mattnzasi</div>
+          </a>
+          <div class="reel-num">02</div>
+        </div>
+      </div>
+
+      <!-- Reel 3 -->
+      <div class="reel-card">
+        <div class="reel-thumb">
+          <a href="https://www.instagram.com/p/DSC5uheEaCP/" target="_blank" class="reel-ig-frame">
+            <div class="reel-ig-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="reel-cta-text"><strong>Watch on Instagram</strong>Post 03 · @mattnzasi</div>
+          </a>
+          <div class="reel-num">03</div>
+        </div>
+      </div>
+
+    </div>
+    <div style="margin-top:16px;text-align:center">
+      <a href="https://www.instagram.com/mattnzasi/" target="_blank" style="font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;border-bottom:0.5px solid var(--border);padding-bottom:2px;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">View full portfolio @mattnzasi ↗</a>
+    </div>
+  </section>
+
+  <!-- CASE STUDY -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">Case study</div>
+    <div class="case-study">
+      <div class="case-study-eyebrow">Featured collaboration</div>
+      <div class="case-study-brand">Fidbak</div>
+      <div class="case-study-handle">@fidbak · Soccer software</div>
+      <span class="case-study-tag">UGC Content</span>
+      <span class="case-study-tag">Instagram</span>
+      <span class="case-study-tag">TikTok</span>
+      <p class="case-study-body">
+        Rather than taking the traditional ad approach, the content I produced for Fidbak leaned into visual conversation — letting the product speak through storytelling rather than promotion. The result was content that felt native to the feed, earned attention organically, and drove real numbers across two platforms.
+      </p>
+      <div class="case-study-stats">
+        <div class="cs-stat">
+          <div class="cs-stat-num">100K+</div>
+          <div class="cs-stat-label">Combined views</div>
+        </div>
+        <div class="cs-stat">
+          <div class="cs-stat-num">2</div>
+          <div class="cs-stat-label">Platforms (IG + TikTok)</div>
+        </div>
+        <div class="cs-stat">
+          <div class="cs-stat-num">0</div>
+          <div class="cs-stat-label">Paid promotion used</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">Packages & pricing</div>
+    <div class="offer-grid-3">
+
+      <!-- UGC Only -->
+      <div class="offer-card">
+        <div class="offer-title">UGC Only</div>
+        <div class="offer-price">$300 / video</div>
+        <ul class="offer-list">
+          <li>1 short-form video (15–60s)</li>
+          <li>Delivered as raw file</li>
+          <li>You post on your own channels</li>
+          <li>Full usage rights included</li>
+          <li>7-day turnaround</li>
+          <li>1 round of revisions</li>
+        </ul>
+      </div>
+
+      <!-- Posted to my page -->
+      <div class="offer-card featured">
+        <div class="offer-tag">Most popular</div>
+        <div class="offer-title">Creator Post</div>
+        <div class="offer-price">$2,000 / video</div>
+        <ul class="offer-list">
+          <li>1 short-form video (15–60s)</li>
+          <li>Posted to my page (28K+ audience)</li>
+          <li>1.5M+ monthly view reach</li>
+          <li>Full usage rights included</li>
+          <li>7-day turnaround</li>
+          <li>1 round of revisions</li>
+        </ul>
+      </div>
+
+      <!-- Custom -->
+      <div class="offer-card">
+        <div class="offer-title">Custom</div>
+        <div class="offer-price">Let's talk</div>
+        <ul class="offer-list">
+          <li>Multi-video bundles</li>
+          <li>Monthly retainer arrangements</li>
+          <li>Photo stills add-ons</li>
+          <li>Whitelisting / dark posting</li>
+          <li>Dedicated content series</li>
+          <li>Rush delivery available</li>
+        </ul>
+      </div>
+
+    </div>
+    <div style="margin-top:16px;padding:14px 20px;border:0.5px solid var(--border);font-size:12px;color:var(--muted);line-height:1.6">
+      <span style="color:var(--accent);font-weight:500">UGC vs. Creator Post — what's the difference?</span>&nbsp; UGC Only gives you professional content to post on your own brand channels. Creator Post puts your product in front of my 28K+ audience of photographers, creatives, and entrepreneurs — with 1.5M+ monthly views behind it.
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">Who I reach</div>
+    <div class="audience-block">
+      <div class="audience-left">
+        <h2>Your brand, <em>their feed.</em></h2>
+        <p>My audience is 28K+ active creators and entrepreneurs building online businesses — people who invest in tools, gear, and software to grow. When they save content (48.7K saves and counting), they're bookmarking it to act on it.</p>
+      </div>
+      <div class="audience-tags">
+        <div class="audience-tag">
+          Photographers & videographers
+          <span>Core audience</span>
+        </div>
+        <div class="audience-tag">
+          Personal brand builders
+          <span>Core audience</span>
+        </div>
+        <div class="audience-tag">
+          Online entrepreneurs
+          <span>Core audience</span>
+        </div>
+        <div class="audience-tag">
+          Creative software users
+          <span>High affinity</span>
+        </div>
+        <div class="audience-tag">
+          Tech & gear enthusiasts
+          <span>High affinity</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">How it works</div>
+    <div class="process-row">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <div class="process-title">Brief</div>
+        <div class="process-desc">You share your product, goals, and any key messages. I'll come back with a content concept.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <div class="process-title">Approve</div>
+        <div class="process-desc">We align on the concept, format, and deliverables before I shoot a single frame.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <div class="process-title">Create</div>
+        <div class="process-desc">I film, edit, and deliver a draft within 7 days. One round of revisions included.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <div class="process-title">Publish</div>
+        <div class="process-desc">Content goes live to my audience. Raw files and full usage rights are yours.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact fade-in">
+    <div class="contact-left">
+      <h2>Ready to <em>work?</em></h2>
+      <a href="mailto:matthewnzasi@gmail.com" class="contact-email">matthewnzasi@gmail.com</a>
+    </div>
+    <div class="contact-right">
+      <div class="social-row">
+        <a href="https://www.instagram.com/mattnzasi/" target="_blank" class="social-link">Instagram ↗</a>
+      </div>
+      <div class="footer-note">@mattnzasi · Photography & Personal Branding</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+  });
+  function animateRing() {
+    rx += (mx - rx - 18) * 0.12;
+    ry += (my - ry - 18) * 0.12;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(2)'; ring.style.opacity = '1'; });
+    el.addEventListener('mouseleave', () => { ring.style.opacity = '0.5'; });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  document.querySelectorAll('.stat').forEach((el, i) => {
+    setTimeout(() => {
+      const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          setTimeout(() => el.classList.add('visible'), i * 120);
+        }
+      }, { threshold: 0.2 });
+      obs.observe(el);
+    }, 0);
+  });
+</script>
+</body>
+</html>

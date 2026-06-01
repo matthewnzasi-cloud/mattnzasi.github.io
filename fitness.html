@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matthew Nzasi — Fitness UGC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #000000;
+  --white: #f0efff;
+  --accent: #7b79ff;
+  --accent-bright: #9b99ff;
+  --blue-deep: #3533cd;
+  --muted: #7775aa;
+  --border: rgba(180,178,255,0.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: linear-gradient(90deg, #000000 0%, #3533cd 100%) fixed;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.cursor { width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999; }
+.cursor-ring { width:36px;height:36px;border:1px solid var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.5; }
+
+.page { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+
+/* ── HERO ── */
+.hero {
+  padding: 72px 0 56px;
+  border-bottom: 0.5px solid var(--border);
+  position: relative;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 48px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--accent); }
+
+.hero-tag {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-tag::after {
+  content: '';
+  width: 40px;
+  height: 0.5px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 10vw, 110px);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+.hero-name .blue { color: var(--accent); display: block; }
+
+.hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-top: 32px;
+}
+.hero-desc {
+  max-width: 420px;
+  font-size: 15px;
+  color: rgba(240,239,255,0.6);
+  line-height: 1.75;
+}
+.avail-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 0.5px solid rgba(123,121,255,0.3);
+  padding: 6px 16px;
+  background: rgba(123,121,255,0.08);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.avail-pill::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)} }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── STATS ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 0.5px solid var(--border);
+}
+.stat {
+  padding: 28px 0 28px 24px;
+  border-right: 0.5px solid var(--border);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── SECTION ── */
+.section { padding: 64px 0; border-bottom: 0.5px solid var(--border); }
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--border);
+}
+
+/* ── TRANSFORMATION ── */
+.transformation {
+  background: rgba(0,0,0,0.4);
+  border: 0.5px solid var(--border);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.transformation::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--blue-deep) 100%);
+}
+
+.transformation-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 36px;
+}
+.transformation-left { flex: 1; }
+.transformation-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  color: var(--white);
+  line-height: 0.9;
+  margin-bottom: 16px;
+}
+.transformation-title em {
+  color: var(--accent);
+  font-style: normal;
+  display: block;
+}
+.transformation-desc {
+  font-size: 14px;
+  color: rgba(240,239,255,0.65);
+  line-height: 1.75;
+  max-width: 380px;
+}
+
+.transformation-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.t-stat {
+  text-align: right;
+}
+.t-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: var(--accent);
+  line-height: 1;
+}
+.t-stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+}
+.ba-card {
+  background: rgba(0,0,0,0.5);
+  padding: 24px;
+  position: relative;
+}
+.ba-label {
+  position: absolute;
+  top: 0; left: 0;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  padding: 6px 14px;
+}
+.ba-label.before { background: rgba(180,178,255,0.1); color: var(--muted); }
+.ba-label.after { background: var(--accent); color: #fff; }
+
+.ba-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: rgba(123,121,255,0.06);
+  border: 1px dashed rgba(123,121,255,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+.ba-placeholder-icon { font-size: 32px; opacity: 0.4; }
+.ba-placeholder-text {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+.ba-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+/* ── VIDEO GRID ── */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+}
+
+.video-card {
+  background: rgba(0,0,0,0.45);
+  position: relative;
+  aspect-ratio: 9/16;
+  overflow: hidden;
+  transition: border-color 0.25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+}
+.video-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--accent);
+  transition: width 0.35s ease;
+}
+.video-card:hover::after { width: 100%; }
+.video-card:hover { background: rgba(53,51,205,0.2); }
+
+.video-num {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  background: rgba(0,0,0,0.5);
+  padding: 2px 8px;
+  z-index: 2;
+}
+
+.play-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(123,121,255,0.15);
+  border: 1px solid rgba(123,121,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+.video-card:hover .play-icon {
+  background: var(--accent);
+  transform: scale(1.08);
+}
+.play-icon svg { width: 20px; height: 20px; fill: var(--white); margin-left: 3px; }
+
+.video-label {
+  text-align: center;
+}
+.video-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.video-sub {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.video-watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 0.5px solid rgba(123,121,255,0.3);
+  padding: 6px 14px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.video-watch:hover {
+  background: rgba(123,121,255,0.1);
+  border-color: var(--accent);
+}
+
+/* ── CASE STUDY ── */
+.case-card {
+  background: rgba(0,0,0,0.35);
+  border: 0.5px solid var(--border);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.case-card:hover { border-color: rgba(123,121,255,0.35); }
+.case-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--blue-deep) 100%);
+}
+.case-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--white);
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+.case-handle {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.case-tag {
+  font-size: 11px;
+  color: var(--accent);
+  border: 0.5px solid rgba(123,121,255,0.25);
+  background: rgba(123,121,255,0.08);
+  padding: 3px 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.case-body {
+  font-size: 14px;
+  color: rgba(240,239,255,0.65);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+.case-stats {
+  display: flex;
+  gap: 0;
+  border-top: 0.5px solid var(--border);
+  padding-top: 24px;
+}
+.cs {
+  flex: 1;
+  border-right: 0.5px solid var(--border);
+  padding-right: 24px;
+  margin-right: 24px;
+}
+.cs:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.cs-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.cs-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── CONTACT ── */
+.contact {
+  padding: 64px 0 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+}
+.contact-left h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  line-height: 0.9;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.contact-left h2 em { color: var(--accent); font-style: normal; display: block; }
+.contact-email {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 0.5px solid var(--border);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.contact-email:hover { color: var(--accent); border-color: var(--accent); }
+.contact-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 28px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.cta-btn:hover { background: var(--accent-bright); transform: translateY(-2px); }
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+.footer-link {
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--accent); }
+
+/* Fade in */
+.fade-in { opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease; }
+.fade-in.visible { opacity:1;transform:translateY(0); }
+
+@media (max-width: 680px) {
+  .page { padding: 0 20px; }
+  .hero-name { font-size: 64px; }
+  .stats { grid-template-columns: repeat(2,1fr); }
+  .stat:nth-child(2n) { border-right: none; }
+  .video-grid { grid-template-columns: 1fr; }
+  .before-after { grid-template-columns: 1fr; }
+  .transformation-top { flex-direction: column; }
+  .transformation-stats { flex-direction: row; }
+  .contact { flex-direction: column; align-items: flex-start; }
+  .contact-right { align-items: flex-start; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <a href="https://matthewnzasi-cloud.github.io/mattnzasi.github.io/" class="back-link">← Back to portfolio</a>
+    <div class="hero-tag">Fitness UGC · Video Showcase</div>
+    <div class="hero-name">
+      Matthew
+      <span class="blue">Nzasi</span>
+    </div>
+    <div class="hero-bottom">
+      <p class="hero-desc">
+        Lifestyle fitness content built around real transformation, gym culture, and the mindset behind consistent progress. Authentic content that converts because it comes from lived experience.
+      </p>
+      <div class="avail-pill">Available for fitness partnerships</div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats fade-in">
+    <div class="stat">
+      <div class="stat-num">50lbs</div>
+      <div class="stat-label">Lost in 3 months</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1.5M+</div>
+      <div class="stat-label">Monthly views</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">28.7K</div>
+      <div class="stat-label">Followers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">48.7K</div>
+      <div class="stat-label">Content saves</div>
+    </div>
+  </div>
+
+  <!-- TRANSFORMATION -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">The story</div>
+    <div class="transformation">
+      <div class="transformation-top">
+        <div class="transformation-left">
+          <div class="transformation-title">
+            Real results.
+            <em>Real story.</em>
+          </div>
+          <p class="transformation-desc">
+            In 3 months I lost 50 lbs through consistent lifting and intentional lifestyle changes. Not a program. Not a challenge. A permanent shift in how I move, eat, and think. That story is what makes my fitness content different — it's not aspirational fiction, it's documented reality. Brands that work with me get a creator whose audience trusts them because they've watched the journey unfold in real time.
+          </p>
+        </div>
+        <div class="transformation-stats">
+          <div class="t-stat">
+            <div class="t-stat-num">50</div>
+            <div class="t-stat-label">Pounds lost</div>
+          </div>
+          <div class="t-stat">
+            <div class="t-stat-num">3</div>
+            <div class="t-stat-label">Months</div>
+          </div>
+          <div class="t-stat">
+            <div class="t-stat-num">0</div>
+            <div class="t-stat-label">Gimmicks</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="before-after">
+        <div class="ba-card">
+          <div class="ba-label before">Before</div>
+          <div class="ba-placeholder">
+            <div class="ba-placeholder-icon">📸</div>
+            <div class="ba-placeholder-text">Before photo<br>available upon request</div>
+          </div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-label after">After</div>
+          <div class="ba-placeholder">
+            <div class="ba-placeholder-icon">📸</div>
+            <div class="ba-placeholder-text">After photo<br>available upon request</div>
+          </div>
+        </div>
+      </div>
+      <div class="ba-note">Photos shared directly upon brand inquiry — matthewnzasi@gmail.com</div>
+    </div>
+  </section>
+
+  <!-- VIDEO SHOWCASE -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">Example videos</div>
+    <div class="video-grid">
+
+      <div class="video-card">
+        <div class="video-num">01</div>
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="video-label">
+          <div class="video-title">Transformation Content</div>
+          <div class="video-sub">Lifestyle · Fitness</div>
+        </div>
+        <a href="https://drive.google.com/file/d/1mqDMsJXrOOfB3iUROJccXqUY0aJMTE3-/view?usp=drive_link" target="_blank" class="video-watch">Watch video ↗</a>
+      </div>
+
+      <div class="video-card">
+        <div class="video-num">02</div>
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="video-label">
+          <div class="video-title">Gym Lifestyle</div>
+          <div class="video-sub">Lifestyle · Training</div>
+        </div>
+        <a href="https://drive.google.com/file/d/1Qo34fHh08Gb4LwgS6WtdZMUKg1y9K7-e/view?usp=drive_link" target="_blank" class="video-watch">Watch video ↗</a>
+      </div>
+
+      <div class="video-card">
+        <div class="video-num">03</div>
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="video-label">
+          <div class="video-title">App Review</div>
+          <div class="video-sub">Review · Fitness Tech</div>
+        </div>
+        <a href="https://drive.google.com/file/d/13GN7opUzSkG0sBf9TBa62oBEVR7YoI_c/view?usp=drive_link" target="_blank" class="video-watch">Watch video ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CASE STUDY -->
+  <section class="section fade-in">
+    <div class="section-eyebrow">Case study</div>
+    <div class="case-card">
+      <div class="case-brand">Maxed AI</div>
+      <div class="case-handle">Fitness app · Transformation & app review content</div>
+      <div class="case-tags">
+        <span class="case-tag">Transformation</span>
+        <span class="case-tag">App review</span>
+        <span class="case-tag">Short-form video</span>
+      </div>
+      <p class="case-body">
+        Produced transformation and app review UGC content for Maxed AI — a fitness app built around personalized training. The content was designed to lead with authentic lifestyle storytelling rather than traditional ad formats, letting the product's value speak through real-world use rather than scripted promotion.
+      </p>
+      <div class="case-stats">
+        <div class="cs">
+          <div class="cs-num">✓</div>
+          <div class="cs-label">Delivered on time</div>
+        </div>
+        <div class="cs">
+          <div class="cs-num">2</div>
+          <div class="cs-label">Videos produced</div>
+        </div>
+        <div class="cs">
+          <div class="cs-num">0</div>
+          <div class="cs-label">Revisions needed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact fade-in">
+    <div class="contact-left">
+      <h2>Let's <em>work.</em></h2>
+      <a href="mailto:matthewnzasi@gmail.com" class="contact-email">matthewnzasi@gmail.com</a>
+    </div>
+    <div class="contact-right">
+      <a href="mailto:matthewnzasi@gmail.com" class="cta-btn">Start a partnership ↗</a>
+      <div class="footer-links">
+        <a href="https://matthewnzasi-cloud.github.io/mattnzasi.github.io/" target="_blank" class="footer-link">Portfolio ↗</a>
+        <a href="https://www.instagram.com/mattnzasi/" target="_blank" class="footer-link">Instagram ↗</a>
+        <a href="mailto:matthewnzasi@gmail.com" class="footer-link">Email ↗</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => {
+    mx=e.clientX; my=e.clientY;
+    cursor.style.transform=`translate(${mx-5}px,${my-5}px)`;
+  });
+  function animateRing(){
+    rx+=(mx-rx-18)*0.12; ry+=(my-ry-18)*0.12;
+    ring.style.transform=`translate(${rx}px,${ry}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ring.style.opacity='1';});
+    el.addEventListener('mouseleave',()=>{ring.style.opacity='0.5';});
+  });
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*100);
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
